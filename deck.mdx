@@ -1,0 +1,210 @@
+import { Appear } from 'mdx-deck'
+
+import { CodeSurfer } from "mdx-deck-code-surfer"
+import vsDark from "prism-react-renderer/themes/vsDark"
+
+export { dark as theme } from 'mdx-deck/themes'
+
+import { SplitRight } from 'mdx-deck/layouts'
+
+import {
+  LiveProvider,
+  LiveEditor,
+  LiveError,
+  LivePreview
+} from 'react-live'
+
+export default SplitRight
+
+![](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg)
+
+# React
+
+```notes
+Notas visíveis apenas para mim
+
+Tópicos
+  - Sobre mim
+  - Logique
+  - Plataforma LoP
+```
+
+---
+
+Dados stateofJS.2017
+
+---
+
+Considerações
+
+```notes
+- Devemos mesmo utilizar SPAs e API's REST para tudo?
+```
+
+---
+
+Dia 1
+* ES6
+* O que é?
+* História
+* Ecossistema
+  * NPM e NodeJS
+
+```notes
+Create React App
+```
+
+---
+
+Dia 2
+* Padrões avançados de componentes
+* Integrando em uma aplicação já existente
+* Bundlers
+
+---
+
+# Olá ✋
+
+```notes
+- C&T.
+- Android/React Arduino Day, NodeJS e Programação Web na ECT
+- Japão estudando educação (programação para iniciantes, games como motivação)
+- Bolsista de Afonso
+- Plataforma LoP
+- Logique Sistemas
+```
+
+---
+
+## É apenas Javascript
+
+Se você for bom em Javascript, se adaptará ao React em 1 dia.
+
+```notes
+Apenas objetos e funções
+```
+
+---
+
+<CodeSurfer
+  title="document.createElement API"
+  theme={vsDark}
+  code={require("!raw-loader!./snippets/basics/01-html-create-document.js")}
+  showNumbers={false}
+/>
+
+---
+
+<CodeSurfer
+  title="React.createElement API"
+  theme={vsDark}
+  code={require("!raw-loader!./snippets/basics/02-react-create-element-api.html")}
+  showNumbers={false}
+/>
+
+---
+
+<CodeSurfer
+  title="JSX"
+  theme={vsDark}
+  code={require("!raw-loader!./snippets/basics/03-react-jsx.html")}
+  showNumbers={false}
+/>
+
+```notes
+- Não é mais text/javascript e sim text/babel
+```
+
+---
+
+<CodeSurfer
+  title="JSX"
+  theme={vsDark}
+  code={require("!raw-loader!./snippets/basics/04-react-jsx-variables.html")}
+  showNumbers={false}
+/>
+
+```notes
+Diferenças:
+- className
+- Interpolação (javascript land)
+- Style
+- Eventos
+- View logic como parte do markup
+```
+
+---
+
+# Javascript expressions
+
+
+
+---
+
+# JSX
+
+[Babel REPL](https://babeljs.io/repl/#?babili=false&browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=DwIwrgLhD2B2AEAoe8DGAbAhgZ2wOUwFsBTAXgCIQIErYBaAE2IDNMx0JykU4BhdAJaoA1qQDeACgCU8UgD40cbNHTEAdOmgBzCQHJ-AgI5hiA3VIC-c5PABCkGLETAA9OChw5QA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=true&fileSize=true&timeTravel=false&sourceType=module&lineWrap=true&presets=es2015%2Creact%2Cstage-2&prettier=false&targets=&version=6.26.0&envVersion=)
+
+---
+
+# Modal código declarativo
+
+---
+
+# Formulários
+
+---
+
+# Create React App
+
+---
+
+# Styled Components
+
+---
+
+## Appear
+
+<ul>
+  <Appear>
+    <li>One</li>
+    <li>Two</li>
+    <li>Three</li>
+  </Appear>
+</ul>
+
+---
+
+<LiveProvider code={`() => (
+  <h3>
+    So functional. Much wow!
+  </h3>
+)`}>
+  <LivePreview style={{ marginBottom: '8px' }} />
+  <LiveEditor />
+</LiveProvider>
+
+---
+
+<LiveProvider code={`<div style={{ 
+  color: 'darkgreen',
+  backgroundColor: 'white',
+  border: '2px solid green',
+  borderRadius: '5px',
+  display: 'inline-block',
+  padding: '4px 8px' 
+}}>
+  Hello World!
+</div>`}>
+  <LivePreview style={{ marginBottom: '8px' }} />
+  <LiveEditor />
+</LiveProvider>
+
+---
+import { fullScreen } from './styles';
+
+export default fullScreen
+
+import LiveEdit from './components/LiveEdit.jsx';
+
+<LiveEdit code={`<div>Hello World!</div>`} />
