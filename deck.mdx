@@ -1,24 +1,20 @@
-import { Appear } from 'mdx-deck'
+import 'bootstrap/dist/css/bootstrap.css';
 
-import { CodeSurfer } from "mdx-deck-code-surfer"
-import vsDark from "prism-react-renderer/themes/vsDark"
+import { Appear, Image } from 'mdx-deck';
+import List from './components/List.jsx';
+import { CodeSurfer } from "mdx-deck-code-surfer";
+import nightOwl from "prism-react-renderer/themes/nightOwl";
+import { SplitRight } from 'mdx-deck/layouts';
 
-export { dark as theme } from 'mdx-deck/themes'
-
-import { SplitRight } from 'mdx-deck/layouts'
-
-import {
-  LiveProvider,
-  LiveEditor,
-  LiveError,
-  LivePreview
-} from 'react-live'
+export { default as theme } from './theme.js';
 
 export default SplitRight
 
 ![](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg)
 
 # React
+
+[https://react-imd-2018.now.sh](https://react-imd-2018.now.sh)
 
 ```notes
 Notas visíveis apenas para mim
@@ -31,180 +27,817 @@ Tópicos
 
 ---
 
-Dados stateofJS.2017
-
----
-
-Considerações
-
-```notes
-- Devemos mesmo utilizar SPAs e API's REST para tudo?
-```
-
----
-
-Dia 1
-* ES6
-* O que é?
-* História
-* Ecossistema
-  * NPM e NodeJS
-
-```notes
-Create React App
-```
-
----
-
-Dia 2
-* Padrões avançados de componentes
-* Integrando em uma aplicação já existente
-* Bundlers
-
----
-
 # Olá ✋
 
 ```notes
 - C&T.
 - Android/React Arduino Day, NodeJS e Programação Web na ECT
+- Programação, cultura japonesa, fotografia, mais recentemente criptomoedas
 - Japão estudando educação (programação para iniciantes, games como motivação)
-- Bolsista de Afonso
+- Bolsista no projeto do BR-PlantExpert
 - Plataforma LoP
 - Logique Sistemas
+- Agradecimentos
 ```
 
 ---
-
-## É apenas Javascript
-
-Se você for bom em Javascript, se adaptará ao React em 1 dia.
+## Todos os códigos são copiáveis 👌
 
 ```notes
-Apenas objetos e funções
+- Códigos em inglês da doc do React
+```
+---
+## Dia 1
+  
+<ul style={{ textAlign: 'left' }}>
+  <li>Javascript</li>
+  <li>ES6 e Manipulação de arrays</li>
+  <li>Exercício</li>
+  <li>React</li>
+  <li>JSX, Componentes, Props, State</li>
+  <li>Formulários</li>
+  <li>Pausa</li>
+  <li>Create React App</li>
+  <li>Prática</li>
+</ul>
+---
+
+## Dia 2
+
+* Padrões avançados para criação componentes
+* Ecossistema React
+* State management
+* styles
+* Integrando em uma aplicação já existente (case BR-PlantExpert)
+* Bundlers  
+
+```notes
+- Um pouco de muitas coisas
+```
+---
+<Image src={require("file-loader!./imgs/flavors.png")} size="80%" />
+
+```notes
+Flavors - Sabores
+ES6 bem estabelecido
+Destaque para Typescript que vem crescendo
+```
+---
+<Image src={require("file-loader!./imgs/flavors-brazil.png")} size="30%" />
+---
+<Image src={require("file-loader!./imgs/libs.png")} size="80%" />
+
+```notes
+Frontend
+
+React ainda é dominante
+Vue vem ganhando força
+Angular vem perdendo
+```
+---
+<Image src={require("file-loader!./imgs/backend-javascript.png")} size="80%" />
+
+```notes
+Backend
+
+Alto número de desenvolvedores que não conhecem as libs
+```
+---
+[Opiniões](https://2017.stateofjs.com/2017/opinions/)
+---
+### ECMAScript / Javascript
+### ES6 / ES2015
+---
+## Ecossistema
+
+```notes
+AI
+Servidor
+Jogos
+Mobile multiplataforma
+```
+---
+## Ecossistema
+
+* [Scribbletune](http://scribbletune.com/)
+* [Electron](https://electronjs.org/)
+* [Tensorflow](https://js.tensorflow.org/)
+* Web-scrapping
+* BOTs de mensagens
+* CLI's
+
+---
+## Ecossistema
+
+* Aplicações Web
+* PDF
+* Hardware - [johnny-five](https://github.com/rwaldron/johnny-five)
+* Real-time - [socket.io](https://socket.io/)
+* Conexão com bancos de dados
+* [Automação de desktop - Google Chrome IAMDinosaur](https://github.com/ivanseidel/IAMDinosaur)
+---
+
+### Recomendação - Event Loop
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8aGhZQkoFbQ" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+
+```notes
+Os problemas das frameworks atuais podem ser resolvidos com entendimento do EventLoop
+```
+---
+# ES6 e manipulação de arrays
+
+```notes
+React API muito simples
+Muito mais saber Javascript
+```
+---
+## Array.map
+
+```javascript
+var months = [
+  { shortName: 'JAN', fullName: 'January', number: 1 },
+  { shortName: 'FEB', fullName: 'February', number: 2 }
+];
+
+var shortNameMonths = months.map(function(month) {
+  return month.shortName;
+});
+
+console.log(shortNameMonths); // ['JAN', 'FEB', ...]
+```
+---
+## Array.filter
+
+```javascript
+var months = [
+  { shortName: 'JAN', fullName: 'January', number: 1 },
+  { shortName: 'FEB', fullName: 'February', number: 2 }
+];
+
+var firstSemester = months.filter(function(month) {
+  return month.number <= 6;
+});
+
+console.log(firstSemester); // ['JAN', 'FEB', .. , 'JUN']
+```
+---
+## Array.reduce
+
+```javascript
+var months = [
+  { shortName: 'JAN', fullName: 'January', number: 1, total: 31 },
+  { shortName: 'FEB', fullName: 'February', number: 2, total: 28 },
+  { shortName: 'MAR', fullName: 'March', number: 3, total: 30 }
+];
+
+var days = months.reduce(function(acc, month) {
+  return acc + month.total;
+}, 0);
+
+console.log(days); // 365
+```
+---
+## Parâmetros default
+
+```javascript
+function multiplicar(x, y = 1) {
+  return x * y;
+}
+
+multiplicar(3, 2); // 6
+multiplicar(3); // 3
+```
+---
+## Arrow functions
+
+```javascript
+var sum = function(x, y) {
+  return x + y;
+};
+
+const sum = (x, y) => {
+  return x + y;
+};
+
+const sum = (x, y) => x + y;
+
+sum(1, 2); // 3
+```
+---
+## Destructuring
+
+```javascript
+// Arrays
+const array = [1, 2];
+const [a, b] = array;
+
+// Objetos
+const aluno = {
+  nome: 'Gabriel',
+  sobrenome: 'Tibúrcio',
+  linguagemFavorita: 'Javascript'
+};
+
+const { nome, linguagemFavorita } = aluno;
+```
+---
+## Parâmetros nomeados com destructuring
+
+```javascript
+function getNome(data) {
+  return data.nome + ' ' + data.sobrenome;
+}
+
+function getNome({ nome, sobrenome }) {
+  return nome + ' ' + sobrenome;
+}
 ```
 
+```notes
+Dá pra imitar os parâmetros nomeados do python
+```
+---
+## Interpolação de strings
+
+```javascript
+function getNome({ nome, sobrenome }) {
+  return `${nome} ${sobrenome}`;
+}
+```
+
+```notes
+Tem bem mais coisa que dá pra fazer com interpolação de strings
+```
+---
+## Classes
+
+```javascript
+class Pessoa {
+  constructor(nome, sobrenome = '') {
+    this.nome = nome;
+    this.sobrenome = sobrenome;
+  }
+
+  getNomeCompleto() {
+    return `${this.nome} ${this.sobrenome}`;
+  }
+}
+
+const pessoa = new Pessoa('Gabriel', 'Tibúrcio');
+pessoa.getNomeCompleto(); // 'Gabriel Tibúrcio'
+```
+---
+# [Exercício](https://codesandbox.io/s/k3r9kv15wv)
 ---
 
-<CodeSurfer
-  title="document.createElement API"
-  theme={vsDark}
-  code={require("!raw-loader!./snippets/basics/01-html-create-document.js")}
-  showNumbers={false}
+# React
+
+<Appear>
+  <p>Uma biblioteca Javascript para construir interfaces de usuário</p>
+  <img src={require("file-loader!./imgs/react-definition.png")} />
+</Appear>
+
+```notes
+Quem tá dizendo?
+```
+---
+<List title="Ainda segundo o facebook"
+  items={[
+    'Declarativo',
+    'Baseado em componentes',
+    'Learn Once, Write Anywhere'
+  ]} 
 />
-
 ---
-
-<CodeSurfer
-  title="React.createElement API"
-  theme={vsDark}
-  code={require("!raw-loader!./snippets/basics/02-react-create-element-api.html")}
-  showNumbers={false}
+<List title="React é como uma interface"
+  items={[
+    'ReactDOM',
+    'ReactNative',
+    'Framer',
+    'ReactPDF',
+    'ReactWord',
+    'ReactVR',
+    'Netflix React para TV'
+  ]} 
 />
-
 ---
-
-<CodeSurfer
-  title="JSX"
-  theme={vsDark}
-  code={require("!raw-loader!./snippets/basics/03-react-jsx.html")}
-  showNumbers={false}
+<List title="Design decisions"
+  items={[
+    'Dificuldade de lidar com dados mudando ao longo do tempo',
+    'Separação de responsabilidades artificial',
+    'Criação de componentes',
+    'Re-render em cada atualização',
+    'Acessibilidade de templates',
+    'Poder de Javascript'
+  ]} 
 />
 
 ```notes
-- Não é mais text/javascript e sim text/babel
+- Kyle Simpson - tempo é o fator mais complicado em uma aplicação
+- Separar templates e lógica não separa responsabilidade
+- Separa responsabilidades de forma artificial, colocando template e lógica em arquivos separados 
+- React separa responsabilidades com componentes isolados que contém ambos template e lógica
 ```
-
 ---
 
+## Hello World
+
+```jsx
+ReactDOM.render(
+  <h1>Hello, world!</h1>, 
+  document.getElementById('root')
+);
+```
+
+```notes
+- Não é HTML nem Javascript
+```
+---
+## [Exemplo](https://codesandbox.io/s/3y8y7kp3nq)
+---
+## [JSX](https://babeljs.io/repl/#?babili=false&browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=JYWwDg9gTgLgBAJQKYEMDG8BmUIjgcilQ3wG4AoctCAOwGd4kAbJEJGmCOAXjgB4AFgEYAfAAlmTCABo4Ad2hMAJgEI-AemEjSQA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=true&fileSize=true&timeTravel=false&sourceType=module&lineWrap=true&presets=es2016%2Creact%2Cstage-3&prettier=false&targets=&version=6.26.0&envVersion=)
+
+```jsx
+const elemento = <h1>Hello, world!</h1>;
+```
+
+```notes
+- Se estivéssemos em 2013, 14, 15 eu teria que convencer vocês
+- Um dos diferenciais do React
+- Dá pra usar Vue com JSX
+```
+---
+#### Expressões em JSX (template interpolation)
+
+```jsx
+const name = 'Gabriel';
+const element = <h1>Hello, {name}</h1>;
+
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
+```
+---
+#### Qualquer expressão JS é válida
+
+```jsx
+const user = { nome: 'Gabriel', sobrenome: 'Tibúrcio' };
+
+const formatName = ({ nome, sobrenome }) => `${nome} ${sobrenome}`;
+
+const element = <h1>Hello, {formatName(user)}!</h1>;
+
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
+```
+---
+#### JSX também é uma expressão
+
+```jsx
+function getGreeting(user) {
+  if (user) {
+    return <h1>Hello, {formatName(user)}!</h1>;
+  }
+  return <h1>Hello, Stranger.</h1>;
+}
+```
+
+```notes
+Podemos:
+- Usar em if e for
+- Atribuir a variáveis
+- Aceitar como argumento
+- Retornar de funções
+```
+---
+#### JSX className e camelCase para atributos
+
+```jsx
+const element = <img className="img-responsive" src={user.avatarUrl} />;
+```
+
+```jsx
+const btnClass = bg === primary ? 'bg-primary' : 'bg-secondary';
+const element = <button className={`btn ${btnClass}`}>Button</button>;
+```
+---
+#### JSX é seguro
+
+```jsx
+const title = response.inputMalicioso;
+
+// Seguro
+const element = <h1>{title}</h1>;
+```
+
+```notes
+- Escapa quaisquer valores antes de renderizar
+```
+---
+```jsx
+function renderizarHtml() {
+  return { __html: '<p>Texto</p>' };
+}
+
+function Componente() {
+  return <div dangerouslySetInnerHTML={renderizarHtml()} />;
+}
+```
+
+```notes
+- Renderizar HTML fica vulnerável a cross-site-scripting XSS
+- Precisa digitar o metódo e passar um objeto para lembrar que é perigoso
+```
+---
+### Componentes 
+
+* Funções idempotentes, puras, unitárias.
+* É possível descrever a UI em qualquer momento no tempo, da mesma forma que uma aplicação renderizada no servidor
+---
+## Componentes e Props
+
+```jsx
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+
+const element = <Welcome name="Gabriel" />;
+```
+
+```notes
+Há 2 tipos de propriedades nos componentes: props e state
+props: durante o ciclo de vida do componente, não mudam
+```
+---
+### Componentes funcionais (não possuem estado)
+
+```jsx
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+```
+---
+### Uma aplicação React
+
+```jsx
+class App extends React.Component {
+  render() {
+    return (
+      <div className="container-fluid">
+        <NavBar />
+        <SideBar />
+
+        <div className="row">
+          <MeuComponente />
+        </div>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+```notes
+Estrutura base de uma página em React
+```
+---
+### JSX não é necessário
+
+```javascript
+class Hello extends React.Component {
+  render() {
+    return React.createElement('div', null, `Hello ${this.props.name}`);
+  }
+}
+
+ReactDOM.render(
+  React.createElement(Hello, { name: 'Gabriel' }, null),
+  document.getElementById('root')
+);
+```
+---
+## State
+
+```notes
+- Propriedades que mudam dentro do componente
+- Estado interno
+```
+---
+<List title="setState"
+  items={[
+    'Custa caro renderizar o DOM todo',
+    'Virtual DOM'
+  ]}
+/>
+---
+<List title="setState"
+  items={[
+    'React constrói uma nova sub-árvore da virtual DOM',
+    'Compara com a virtual DOM antiga',
+    'Computa a mínima quantidade de mutações no DOM e as coloca em uma fila',
+    'Executa em batch todas as mudanças'
+  ]}
+/>
+---
 <CodeSurfer
-  title="JSX"
-  theme={vsDark}
-  code={require("!raw-loader!./snippets/basics/04-react-jsx-variables.html")}
-  showNumbers={false}
+  title="Clock"
+  theme={nightOwl}
+  code={require("!raw-loader!./snippets/react/components/clock-example.jsx")}
+  showNumbers={true}
+  steps={[
+    { range: [2, 5], notes: 'Definimos o estado inicial' },
+    { range: [24, 31] },
+    { range: [18, 22], notes: 'setState é como modificamos o estado' },
+    { range: [7, 12] },
+    { range: [14, 16] },
+    { range: [34, 37] },
+    { range: [1, 37] }
+  ]}
 />
 
 ```notes
-Diferenças:
-- className
-- Interpolação (javascript land)
-- Style
-- Eventos
-- View logic como parte do markup
+- setState é como dizemos ao react que queremos modificar o estado do componente
+- componentDidMount é onde fazemos requisições
+- renderizamos apenas uma vez
+```
+---
+<List title="Apenas javascript"
+  items={[
+    'Como declarar um componente?',
+    'Como criar uma lista de componentes?',
+    'Como fazer uma requisição?',
+    'Em nenhum momento a gente olha para a DOM e procura onde devemos atualizar'
+  ]}
+/>
+
+```notes
+- fetch, axios, jQuery
+- Requisição: precisamos saber apenas aonde colocar
+```
+---
+## Eventos
+
+```jsx
+<button onclick="ativar()">
+  Ativar
+</button>
+
+<button onClick={this.ativar}>
+  Ativar
+</button>
 ```
 
+```notes
+- camelCase
+- funções != strings
+- Erro comum, chamar a função
+```
 ---
+## ButtonSwitch
 
-# Javascript expressions
+import ButtonSwitch from './components/ButtonSwitch.jsx';
 
-
-
+<ButtonSwitch />
 ---
+<CodeSurfer
+  title="ButtonSwitch"
+  theme={nightOwl}
+  code={require("!raw-loader!./components/ButtonSwitch.jsx")}
+  showNumbers={true}
+  steps={[
+    { lines: [6] },
+    { range: [18, 27], notes: 'this.handleClick' },
+    { range: [12, 27] },
+    { lines: [8, 9] },
+    { range: [1, 27] }
+  ]}
+/>
 
-# JSX
-
-[Babel REPL](https://babeljs.io/repl/#?babili=false&browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=DwIwrgLhD2B2AEAoe8DGAbAhgZ2wOUwFsBTAXgCIQIErYBaAE2IDNMx0JykU4BhdAJaoA1qQDeACgCU8UgD40cbNHTEAdOmgBzCQHJ-AgI5hiA3VIC-c5PABCkGLETAA9OChw5QA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=true&fileSize=true&timeTravel=false&sourceType=module&lineWrap=true&presets=es2015%2Creact%2Cstage-2&prettier=false&targets=&version=6.26.0&envVersion=)
-
+```notes
+- 2 coisas, valor de this e setState
+- Cuidado com this em callbacks JSX
+- O this dentro de métodos de classe não se refere a classe, portanto o this será undefined dentro do método handleClick.
+```
 ---
-
-# Modal código declarativo
-
+```jsx
+<button onClick={() => this.handleClick()} className={`btn btn-block ${btnClass}`}>
+  {this.state.on ? 'On' : 'Off'}
+</button>
+```
 ---
+```jsx
+handleClick = () => {
+  // this.state.on
+  this.setState(state => {
+    return { on: !state.on }
+  });
+}
+```
+---
+import { Button } from 'reactstrap';
+import ExemploModal from './components/ExemploModal.jsx';
 
+### Modal
+<ExemploModal buttonLabel="Abrir modal" />
+
+```javascript
+$('#modal').modal();
+```
+---
+<CodeSurfer
+  title="Modal"
+  theme={nightOwl}
+  code={require("!raw-loader!./components/ExemploModal.jsx")}
+  showNumbers={true}
+  steps={[
+    { range: [5, 16] },
+    { range: [18, 34] }
+  ]}
+/>
+
+```notes
+Exemplo de mudança de pensamento de código imperativo para declarativo
+```
+---
+## Listas
+
+```jsx
+function Lista(props) {
+  const listaItens = props.itens.map(item => (
+    <li>{item}</li>
+  );
+  return (
+    <ul>{item}</ul>
+  );
+}
+
+<Lista numeros={['Item 1', 'Item 2', 'Item 3', 'Item 4']} />
+```
+
+```notes
+- Warning é necessário uma key para itens de uma lista
+```
+---
+## Listas
+
+```jsx
+function Lista(props) {
+  const listaItens = props.itens.map(item => (
+    <li key={item}>{item}</li>
+  );
+  return (
+    <ul>{item}</ul>
+  );
+}
+
+<Lista numeros={['Item 1', 'Item 2', 'Item 3', 'Item 4']} />
+```
+---
+## Listas
+
+```jsx
+function Lista(props) {
+  const listaItens = props.itens.map((item, indice) => (
+    <li key={indice}>{item}</li>
+  );
+  return (
+    <ul>{item}</ul>
+  );
+}
+
+<Lista numeros={['Item 1', 'Item 1', 'Item 1', 'Item 1']} />
+```
+
+```notes
+- O React iria reclamar se fossem usadas keys iguais
+```
+---
 # Formulários
 
+```notes
+- Não é difícil, mas ainda é burocrático
+- Funciona um pouco diferente porque elementos de formulário possuem um estado próprio
+```
+---
+<CodeSurfer
+  title="Formulário"
+  theme={nightOwl}
+  code={require("!raw-loader!./components/NameForm.jsx")}
+  showNumbers={true}
+  steps={[
+    { range: [19, 30] },
+    { range: [10, 12] },
+    { range: [1, 31] },
+  ]}
+/>
+
+```notes
+- Entender um componente, começar pela função render
+- Componentes controlados - valor do input no state
+- Evento normal do HTML
+```
+---
+## Select
+
+```html
+<select>
+  <option value="maca">Maçã</option>
+  <option value="laranja">Laranja</option>
+  <option selected value="uva">Uva</option>
+  <option value="limao">Limão</option>
+</select>
+``` 
+
+```notes
+- Forma de selecionar uma opção no HTML
+```
+---
+## Select
+
+```jsx
+<form onSubmit={this.handleSubmit}>
+  <label>
+    Selecione sua fruta favorita
+    <select value={this.state.value} onChange={this.handleChange}>
+      <option value="maca">Maçã</option>
+      <option value="laranja">Laranja</option>
+      <option value="uva">Uva</option>
+      <option value="limao">Limão</option>
+    </select>
+  </label>
+  <input type="submit" value="Submit" />
+</form>
+``` 
+
+```notes
+- React usa uma propriedade value no select
+- Isso faz com que o select funcione parecido com o input
+```
+---
+## Formulários
+
+```javascript
+this.state = { nome: '', sobrenome: '', linguagemFavorita: '' };
+
+handleChangeNome(event) {
+  this.setState({ nome: event.target.value });
+}
+
+handleChangeSobrenome(event) {
+  this.setState({ sobrenome: event.target.value });
+}
+
+handleChangeLinguagemFavorita(event) {
+  this.setState({ linguagemFavorita: event.target.value });
+}
+```
+---
+## Formulários
+
+```javascript
+this.state = { nome: '', sobrenome: '', linguagemFavorita: '' };
+
+handleChange(event) {
+  const target = event.target;
+  const { name, value } = target;
+  this.setState({ 
+    [name]: value
+  });
+}
+```
+
+```notes
+- Usamos propriedades computadas do ES6
+- A propriedade se torna dinâmica
+```
+---
+import Forms from './components/Forms.jsx';
+
+<Forms />
 ---
 
+
+
+
+# Pausa
+
+
+
+
+---
 # Create React App
-
 ---
-
-# Styled Components
-
+```bash
+npx create-react-app my-app
+cd my-app
+npm start
+```
 ---
-
-## Appear
-
-<ul>
-  <Appear>
-    <li>One</li>
-    <li>Two</li>
-    <li>Three</li>
-  </Appear>
-</ul>
-
----
-
-<LiveProvider code={`() => (
-  <h3>
-    So functional. Much wow!
-  </h3>
-)`}>
-  <LivePreview style={{ marginBottom: '8px' }} />
-  <LiveEditor />
-</LiveProvider>
-
----
-
-<LiveProvider code={`<div style={{ 
-  color: 'darkgreen',
-  backgroundColor: 'white',
-  border: '2px solid green',
-  borderRadius: '5px',
-  display: 'inline-block',
-  padding: '4px 8px' 
-}}>
-  Hello World!
-</div>`}>
-  <LivePreview style={{ marginBottom: '8px' }} />
-  <LiveEditor />
-</LiveProvider>
-
----
-import { fullScreen } from './styles';
-
-export default fullScreen
-
-import LiveEdit from './components/LiveEdit.jsx';
-
-<LiveEdit code={`<div>Hello World!</div>`} />
+```
