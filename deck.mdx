@@ -840,4 +840,420 @@ cd my-app
 npm start
 ```
 ---
+## Dia 2
+
+* curiosidades
+* imports, exports e bundlers
+* state
+* prática
+* renderProps
+* React Router
+
+---
+## Curiosidades
+
+* [mdx-deck](https://github.com/jxnblk/mdx-deck)
+* [https://github.com/tibuurcio/react-imd-2018](https://github.com/tibuurcio/react-imd-2018)
+* [Prettier](https://prettier.io/)
+* [now.sh](http://now.sh/)
+
+```notes
+now faz parte de um conjunto de sites (Netlify, Heroku) para deploy de aplicações
+Hyper, Next.js
 ```
+---
+## default export
+
+```javascript
+const add = (a, b) => a + b;
+const sub = (a, b) => a - b;
+
+const math = {
+  add: add,
+  sub: sub
+};
+
+export math;
+
+// Em outro arquivo
+import math from './math.js';
+import meuNomePreferido from './math.js';
+
+math.add(1, 2); // 3
+meuNomePreferido.add(1, 2); // 3
+```
+---
+## named export
+
+```javascript
+const add = (a, b) => a + b;
+const sub = (a, b) => a - b;
+
+export { add, sub };
+
+// Em outro arquivo
+import { add, sub } from './math.js';
+
+add(1, 2); // 3
+sub(1, 2); // -1
+```
+---
+## React
+
+```jsx
+import React, { Component } from 'react';
+
+export default class Button extends Component {
+  render() {
+    return (
+      <button className="btn btn-default">Botão</button>
+    );
+  }
+}
+
+// Em outro arquivo
+import Button from './Button';
+```
+---
+## React
+
+```jsx
+import React, { Component } from 'react';
+
+const Button = () => <button className="btn btn-default">button</button>;
+const Div = () => <div className="div-customizada">div</div>;
+
+export { Button, Div };
+
+// Em outro arquivo
+import { Button, Div } from './Button';
+```
+---
+## reactstrap
+
+```jsx
+import React from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+```
+
+```notes
+Na prática
+```
+---
+## Webpack
+<Appear>
+  <p>Bundler de arquivos estáticos para aplicações em javascript modernas</p>
+  <p>Outros: Browserify, Rollup, Parcel</p>
+</Appear>
+
+```notes
+Não é possível usar imports no browser ainda
+Alguém conhece algum deles?
+```
+---
+<Image src={require("file-loader!./imgs/webpack.png")} size="80%" />
+
+```notes
+E bundlers em geral
+```
+---
+```html
+<!doctype html>
+<html>
+  <head>
+    <title>Getting Started</title>
+    <script src="https://unpkg.com/lodash@4.16.6"></script>
+  </head>
+  <body>
+    <script src="./src/main.js"></script>
+  </body>
+</html>
+```
+
+```notes
+Inclui lodash via script
+```
+---
+src/main.js
+```javascript
+function component() {
+  let element = document.createElement('div');
+
+  // Precisa-se do lodash incluído na página para essa linha funcionar
+  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+
+  return element;
+}
+
+document.body.appendChild(component());
+```
+
+```notes
+Dependências implícitas entre a tag script que importa o lodash e o código em index.js
+
+- Não é aparente que o script depende de uma biblioteca
+- Se a dependência estiver faltando ou for incluída na ordem errada, não vai funcionar
+- O browser precisa fazer o download de dependências desnecessárias
+```
+---
+```javascript
+import _ from 'lodash';
+
+function component() {
+  let element = document.createElement('div');
+
+  // Precisa-se do lodash incluído na página para essa linha funcionar
+  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+
+  return element;
+}
+
+document.body.appendChild(component());
+```
+
+```html
+<script src="./dist/main.js"></script>
+```
+---
+Em conjunto com o Babel, webpack se torna uma ferramenta importante
+
+```notes
+Implementam especificações antes de serem aprovadas, preset-{0, 3}
+```
+---
+Create React App já configura tudo pra gente 👏
+---
+import codeComparisonLayout from './layouts/code-comparison';
+
+export default codeComparisonLayout
+
+setState
+
+```jsx
+this.setState({
+  button: true
+});
+```
+
+```jsx
+this.setState(state => {
+  button: !state.button
+});
+```
+---
+export default codeComparisonLayout
+
+callback
+
+```jsx
+this.setState({ 
+  button: true 
+}, () => console.log(this.state));
+```
+
+```jsx
+this.setState(state => {
+  button: !state.button
+}, () => console.log(this.state));
+```
+---
+import ExemploSetState from './components/ExemploSetState.jsx';
+
+<ExemploSetState fail={true}/>
+---
+<CodeSurfer
+  title="setState"
+  theme={nightOwl}
+  code={require("!raw-loader!./examples/ExemploSetState.jsx")}
+  showNumbers={true}
+  steps={[
+    { range: [6, 13] },
+    { range: [26, 34] },
+    { range: [15, 23] },
+  ]}
+/>
+
+```notes
+Não dá certo por causa do shallow merge
+```
+---
+Criando uma cópia e substituindo a propriedade
+```javascript
+handleClick(name) {
+  this.setState(state => {
+    const novoState = Object.assign({}, state);
+    novoState.buttons[name] = !state.buttons[name];
+    return novoState;
+  });
+}
+```
+---
+Utilizando operador de spread
+```javascript
+handleClick(name) {
+  this.setState(state => {
+    return {
+      buttons: {
+        ...state.buttons,
+        [name]: !state.buttons[name]
+      }
+    };
+  });
+}
+```
+---
+immutability-helper
+```javascript
+import update from 'immutability-helpers';
+
+handleClick(name) {
+  this.setState(state => {
+    return update(state, {
+      buttons: {
+        [name]: {
+          $set: !state.buttons[name]
+        }
+      }
+    };
+  });
+}
+```
+---
+```javascript
+update(state, {
+  outra: {
+    propriedade: {
+      nested: {
+        $set: { valor: 3 }
+      }
+    }
+  }
+})
+```
+---
+<ExemploSetState fail={false}/>
+
+```notes
+Funciona com qualquer uma das alternativas anteriores
+```
+---
+```javascript
+this.state = {
+  buttons: [],
+  divs: {},
+  inputs: {},
+  keys: {}
+}
+
+this.setState({
+  buttons: {},
+  keys: {}
+});
+```
+---
+
+Prática
+
+[Documentação CRA](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md)
+
+<ul style={{ textAlign: 'left' }}>
+<Appear>
+  <li>Instalando dependências</li>
+  <li>Adicionando CSS, imagens, fontes e arquivos</li>
+  <li>Adicionando Bootstrap</li>
+  <li>Adicionando Router</li>
+  <li>Testes (Jest)</li>
+  <li>Progressive Web Application</li>
+  <li>Deploy (Now, Firebase, Netlify, Heroku, Github pages, Azure)</li>
+</Appear>
+</ul>
+---
+Estados
+
+[https://www.geonames.org/childrenJSON?geonameId=3469034](https://www.geonames.org/childrenJSON?geonameId=3469034)
+```json
+{
+  "geonames": [
+    {
+      "geonameId": 3390290,
+      "name": "Rio Grande do Norte"
+    }
+  ]
+}
+```
+---
+Cidades
+
+[https://www.geonames.org/childrenJSON?geonameId=3390290](https://www.geonames.org/childrenJSON?geonameId=3390290)
+
+```json
+{
+  "geonames": [
+    {
+      "geonameId": 6320189,
+      "name": "Natal"
+    }
+  ] 
+}
+```
+---
+Bairros
+
+[https://www.geonames.org/childrenJSON?geonameId=6320189](https://www.geonames.org/childrenJSON?geonameId=6320189)
+
+```json
+{
+  "geonames": [
+    {
+      "name": "Ponta Negra"
+    }
+  ] 
+}
+```
+---
+import ExemploPratica from './components/ExemploPratica.jsx';
+
+<ExemploPratica />
+
+```notes
+Dicas:
+- a ideia não é terminar hoje, e sim pensar sobre o problema
+- podemos fazer a primeira requisição pelos estados assim que o componente é criado
+- não podemos fazer logo a de municípios pois não sabemos qual estado
+- o método handleChange não pode simplesmente mudar o estado, pois não temos as informações ainda
+- lembrar do loading
+- discutir como podemos representar o state da página
+```
+---
+Exemplo requisição
+```jsx
+import axios from 'axios';
+
+componentDidMount() {
+  axios.get('https://api.github.com/users/tibuurcio').then(res => {
+    this.setState({
+      imagemUrl: res.data.imagem_url
+    });
+  }).catch(console.error);
+}
+```
+---
+renderProps
+---
+React Suspense (lidar com código assíncrono)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/v6iR3Zk4oDY" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+---
+## Próximos passos
+
+* [React Docs](https://reactjs.org/docs/)
+* [React Docs - Advanced Guides](https://reactjs.org/docs/)
+* [unstated](https://github.com/jamiebuilds/unstated)
+* [Integrando CRA com Typescript](https://github.com/Microsoft/TypeScript-React-Starter)
+* [Next.js](https://nextjs.org/) - Renderização no servidor com React
+* [Gatsby](https://www.gatsbyjs.org/) - Gerador de sites estáticos (blog, documentação)
+
+```notes
+Next.js
+Gastby semelhante ao Jekyll (Ruby), Wordpress (PHP)
+```
+---
